@@ -1,0 +1,17 @@
+p {
+    background-color: red;
+    color:lightblue;
+}
+a{
+    color:blue !important;
+}
+.lorem{
+    background-color: darkorchid;
+}
+.plorem{
+    background-color: white;
+    color:black
+}
+#vacio{
+    background-color: fuchsia;
+}
