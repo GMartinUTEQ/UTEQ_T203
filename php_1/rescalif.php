@@ -7,12 +7,13 @@ if (
     !isset($_REQUEST["ev2"]) ||
     !isset($_REQUEST["ev3"])
 ) {
-    die("Lo siento, no se recibió algún parámetro");
+    die("<h1>Lo siento, no se recibió algún parámetro</h1>");
 }
 
 $promedio = 0;
 $promedio = ($_REQUEST["ev1"] + $_REQUEST["ev2"] + $_REQUEST["ev3"]) / 3;
 $resultado = "";
+/*
 if ($promedio == 10) {
     $resultado = "AU";
 } else {
@@ -26,8 +27,8 @@ if ($promedio == 10) {
         }
     }
 }
+*/
 
-/*
 if ($promedio == 10) {
     $resultado = "AU";
 } elseif ($promedio >= 9  && $promedio < 10) {
@@ -37,7 +38,7 @@ if ($promedio == 10) {
 } else {
     $resultado = "NA";
 }
-*/
+
 
 echo "<h1>Hola, " . $_REQUEST["nombre"] . "<h1>";
 echo "<h2>El promedio de la materia: " . $_REQUEST["materia"] . " es: " . $promedio . " el resultado es: " . $resultado . "</h2>";
