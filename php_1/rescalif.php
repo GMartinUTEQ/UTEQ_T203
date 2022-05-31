@@ -42,3 +42,34 @@ if ($promedio == 10) {
 
 echo "<h1>Hola, " . $_REQUEST["nombre"] . "<h1>";
 echo "<h2>El promedio de la materia: " . $_REQUEST["materia"] . " es: " . $promedio . " el resultado es: " . $resultado . "</h2>";
+
+
+
+
+
+echo "<h1>Hola Mundo !! </h1>";
+
+
+
+
+return(
+    <div>
+        <h1>    
+            Hola Mundo
+        </h1>
+    </div>
+        
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
