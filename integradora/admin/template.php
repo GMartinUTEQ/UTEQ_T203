@@ -53,59 +53,11 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">DataTable with default features</h3>
+                  <h3 class="card-title">Título</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>IDCategoría</th>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Activo</th>
-                        <th>Prefijo</th>
-                        <th>Editar</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                      <?php
-                      include("conexion.php");
-
-                      $sql = "select * from categoria";
-                      $result = $conn->query($sql);
-
-                      if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                          echo "
-                          <tr>
-                            <td>" . $row["idcategoria"] . "</td>
-                            <td>" . $row["nombrecategoria"] . "</td>
-                            <td>" . $row["fechaalta"] . "</td>
-                            <td>" . $row["activo"] . "</td>
-                            <td>" . $row["prefijo"] . "</td>
-                            <td><a href='categoria.php?idcat=" . md5($row["idcategoria"]) . "'><i class=\"far fa-edit\"></i></a></td>
-                          </tr>
-                            ";
-                        }
-                      } else {
-                        echo "0 results";
-                      }
-                      $conn->close();
-                      ?>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>IDCategoría</th>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Activo</th>
-                        <td>Prefijo</th>
-                        <td>Editar</th>
-                      </tr>
-                    </tfoot>
-                  </table>
+                  <!-- GMV: Aquí poner el cuerpo -->
                 </div>
                 <!-- /.card-body -->
               </div>

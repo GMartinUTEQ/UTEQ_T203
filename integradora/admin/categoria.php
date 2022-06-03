@@ -25,6 +25,34 @@
 
     include("menu.php");
 
+    $idcategoria = "";
+    $nombrecat = "";
+    $prefijo = "";
+    $activo = "";
+    $destino = "";
+    if (isset($_REQUEST["idcat"])) {
+
+      include("conexion.php");
+
+      $sql = "select idcategoria, nombrecategoria, activo, prefijo from categoria where md5(idcategoria) = '" . $_REQUEST["idcat"] . "'";
+      $result = mysqli_query($conn, $sql);
+
+      if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while ($row = mysqli_fetch_assoc($result)) {
+          $destino = "?idcat=" . md5($row["idcategoria"]);
+          $idcategoria = $row["idcategoria"];
+          $nombrecat = $row["nombrecategoria"];
+          $prefijo = $row["prefijo"];
+          $activo = $row["activo"];
+          echo "<script>console.log(\"$activo\");</script>";
+        }
+      } else {
+        echo "0 results";
+      }
+
+      mysqli_close($conn);
+    }
     ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -34,7 +62,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>DataTables</h1>
+              <h1>Categoría</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -53,59 +81,45 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">DataTable with default features</h3>
+                  <h3 class="card-title">Alta de categorías</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>IDCategoría</th>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Activo</th>
-                        <th>Prefijo</th>
-                        <th>Editar</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Llene los siguientes datos:</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form action="categoriaAcciones.php<?= $destino ?>" method="post">
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label for="nombre">Nombre de la categoría:</label>
+                          <input type="text" class="form-control" name="nombre" id="nombre" value="<?= $nombrecat; ?>" placeholder="Nombre de la categoría.">
+                        </div>
 
-                      <?php
-                      include("conexion.php");
-
-                      $sql = "select * from categoria";
-                      $result = $conn->query($sql);
-
-                      if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                          echo "
-                          <tr>
-                            <td>" . $row["idcategoria"] . "</td>
-                            <td>" . $row["nombrecategoria"] . "</td>
-                            <td>" . $row["fechaalta"] . "</td>
-                            <td>" . $row["activo"] . "</td>
-                            <td>" . $row["prefijo"] . "</td>
-                            <td><a href='categoria.php?idcat=" . md5($row["idcategoria"]) . "'><i class=\"far fa-edit\"></i></a></td>
-                          </tr>
-                            ";
+                        <div class="form-group">
+                          <label for="nombre">Prefijo de la categoría:</label>
+                          <input size="3" type="text" value="<?= $prefijo ?>" class="form-control" name="prefijo" id="prefijo" placeholder="Prefijo de la categoría. (Ej.: AAA)">
+                        </div>
+                        <?php
+                        $chequeado = "";
+                        if ($activo == 1) {
+                          $chequeado = "checked";
                         }
-                      } else {
-                        echo "0 results";
-                      }
-                      $conn->close();
-                      ?>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>IDCategoría</th>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Activo</th>
-                        <td>Prefijo</th>
-                        <td>Editar</th>
-                      </tr>
-                    </tfoot>
-                  </table>
+                        ?>
+                        <div class="form-check">
+                          <input <?= $chequeado ?> type="checkbox" class="form-check-input" id="activo" name="activo">
+                          <label class="form-check-label" for="activo">Activo.</label>
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+
+                      <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
                 <!-- /.card-body -->
               </div>
