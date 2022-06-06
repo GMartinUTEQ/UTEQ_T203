@@ -34,12 +34,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>DataTables</h1>
+              <h1>CATEGORÍAS</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">DataTables</li>
+                <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
+                <li class="breadcrumb-item active">Categorías</li>
               </ol>
             </div>
           </div>
@@ -53,7 +53,23 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">DataTable with default features</h3>
+                  <h3 class="card-title">Listado de categorías</h3>
+                  <?php
+                  $btnBorrados = "Mostrar todos";
+                  $accBorrados = "categorialst.php?borrados=si";
+                  if (isset($_REQUEST["borrados"])) {
+                    $btnBorrados = "Ocultar borrados";
+                    $accBorrados = "categorialst.php";
+                  } else {
+                    if (isset($_REQUEST["soloborrados"])) {
+                      $btnBorrados = "Mostrar activos";
+                      $accBorrados = "categorialst.php";
+                    }
+                  }
+
+                  ?>
+                  <br><a class="btn btn-dark" href="<?= $accBorrados ?>"><?= $btnBorrados ?></a>
+                  <a class="btn btn-danger" href="categorialst.php?soloborrados=si">Mostrar solo borrados</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -66,27 +82,43 @@
                         <th>Activo</th>
                         <th>Prefijo</th>
                         <th>Editar</th>
+                        <th>Eliminar</th>
                       </tr>
                     </thead>
                     <tbody>
 
                       <?php
                       include("conexion.php");
+                      $borrados = " where activo = 1";
+                      if (isset($_REQUEST["borrados"])) {
+                        $borrados = "";
+                      } else {
+                        if (isset($_REQUEST["soloborrados"])) {
+                          $borrados = " where activo = 0";
+                        }
+                      }
 
-                      $sql = "select * from categoria";
+                      $sql = "select * from categoria $borrados";
                       $result = $conn->query($sql);
 
                       if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
+                          $colorInactivo = "";
+                          if ($row["activo"] == "0") {
+                            $colorInactivo = "style='color:red'";
+                          }
+
                           echo "
-                          <tr>
+                          <tr $colorInactivo>
                             <td>" . $row["idcategoria"] . "</td>
                             <td>" . $row["nombrecategoria"] . "</td>
                             <td>" . $row["fechaalta"] . "</td>
                             <td>" . $row["activo"] . "</td>
                             <td>" . $row["prefijo"] . "</td>
                             <td><a href='categoria.php?idcat=" . md5($row["idcategoria"]) . "'><i class=\"far fa-edit\"></i></a></td>
-                          </tr>
+                            <td><a href='categoriaAcciones.php?acc=elimina&idcat=" .  md5($row["idcategoria"])  . "'><i class=\"fa fa-trash-alt\"></i></a></td>
+                         
+                           </tr>
                             ";
                         }
                       } else {
@@ -101,8 +133,9 @@
                         <th>Nombre</th>
                         <th>Fecha</th>
                         <th>Activo</th>
-                        <td>Prefijo</th>
-                        <td>Editar</th>
+                        <th>Prefijo</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                       </tr>
                     </tfoot>
                   </table>
