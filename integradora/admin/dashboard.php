@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+include_once("ValidaSesion.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
