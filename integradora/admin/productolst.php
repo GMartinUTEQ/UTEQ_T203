@@ -109,6 +109,12 @@ include_once("ValidaSesion.php");
                                             if ($result->num_rows > 0) {
                                                 while ($row = $result->fetch_assoc()) {
                                                     $colorInactivo = "";
+                                                    $urlFoto = "";
+                                                    if (strlen($row["urlfoto"]) < 20) {
+                                                        $urlFoto = "http://uteq.edu.mx/imagenes/" . $row["urlfoto"];
+                                                    } else {
+                                                        $urlFoto = $row["urlfoto"];
+                                                    }
                                                     if ($row["activo"] == "0") {
                                                         $colorInactivo = "style='color:red'";
                                                     }
@@ -119,7 +125,7 @@ include_once("ValidaSesion.php");
                             <td>" . $row["nombreproducto"] . "</td>
                             <td>" . $row["fechaalta"] . "</td>
                             <td>" . $row["activo"] . "</td>
-                            <td><a href='" . $row["urlfoto"] . "' target='_blank'><img style='max-height:60px' src='" . $row["urlfoto"] . "' /></a></td>
+                            <td><a href='" . $urlFoto . "' target='_blank'><img style='max-height:60px' src='" . $urlFoto . "' /></a></td>
                             <td><a href='producto.php?idcat=" . md5($row["idproducto"]) . "'><i class=\"far fa-edit\"></i></a></td>
                             <td><a href='productoAcciones.php?acc=elimina&idcat=" .  md5($row["idcategoria"])  . "'><i class=\"fa fa-trash-alt\"></i></a></td>
                          
