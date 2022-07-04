@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,56 +25,56 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
+                <h1>Carrito de compras</h1>
                 <?php
-                include("./admin/conexion.php");
-                $sql = "select * from producto inner join inventario on inventario.idproducto = producto.idproducto where md5(producto.idproducto) = '" . $_REQUEST["idprod"] . "'";
-                //echo $sql;
-                $result = mysqli_query($conn, $sql);
-                $idproducto = 0;
-                $nombreproducto = "";
-                $precioproducto = 0;
-                $descripcionproducto = "";
-                $urlfoto = "";
-                $inventario = 0;
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $idproducto = $row["idproducto"];
-                        $nombreproducto = $row["nombreproducto"];
-                        $precioproducto = $row["precio"];
-                        $descripcionproducto = $row["descripcionproducto"];
-                        $urlfoto = $row["urlfoto"];
-                        $inventario = $row["cantidad"];
+                $carrito = $_SESSION["sCarrito"];
+                $cuentaCarrito = count($carrito);
+                if ($cuentaCarrito > 0) {
+                    echo ' <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>idProducto</th>
+                            <th>NombreProducto</th>
+                            <th>Cantidad</th>
+                            <th>Eliminar</th>
+                          </tr>
+                        </thead>
+                        <tbody>';
+                    foreach ($carrito as $x => $x_value) {
+
+
+                        include("./admin/conexion.php");
+                        $sql = "select * from producto where activo = 1 and idproducto = " . $x;
+
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+
+
+                                echo '<tr>
+                                    <td>' . $row["idproducto"] . '</td>
+                                    <td>' . $row["nombreproducto"] . '</td>
+                                    <td><input type="number" value="' . $x_value . '"></td>
+                                    <td><a href="eliminacarrito.php?idp=' . $row["idproducto"] . '" class="btn btn-danger">Eliminar</a></td>
+                                  </tr>
+                                  ';
+                            }
+                        }
                     }
+                    echo '</tbody>
+                    </table>';
                 } else {
-                    echo "0 results";
+                    echo "<br><br><h3>Aún no tienes nada en tu carrito, mira las siguientes recomendaciones.</h3>";
                 }
-
-                mysqli_close($conn);
                 ?>
-                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="<?= $urlfoto ?>" alt="..." /></div>
-                <div class="col-md-6">
-                    <div class="small mb-1">SKU: <?= $_REQUEST["idprod"] ?></div>
-                    <h1 class="display-5 fw-bolder"><?= $nombreproducto ?></h1>
-                    <div class="fs-5 mb-5">
-                        <span class="text-decoration-line-through"><?php echo $precioproducto * 1.13 ?></span>
-                        <span>$<?= $precioproducto ?></span>
-                    </div>
-                    <p class="lead"><?= $descripcionproducto ?></p>
-                    <form action="" method="post" cause>
-                        <div class="d-flex">
-                            <input required class="form-control text-center me-3" id="inputQuantity" type="number" value="0" min="1" max="<?= $inventario ?>" style="max-width: 5rem" />
-                            <input type="submit" value="Comprar" class="btn btn-outline-dark flex-shrink-0">
-
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
     </section>
     <!-- Related items section-->
     <section class="py-5 bg-light">
         <div class="container px-4 px-lg-5 mt-5">
-            <h2 class="fw-bolder mb-4">Related products</h2>
+            <h2 class="fw-bolder mb-4">Recomendaciones:</h2>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <?php
                 include("./admin/conexion.php");
