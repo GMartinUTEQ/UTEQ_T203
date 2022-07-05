@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,15 +21,19 @@
 <body>
     <!-- Navigation-->
     <?php include("header.php"); ?>
-    <!-- Product section-->
+    <!-- Product section
+    <a href='index.php' class="btn btn-dark">Regresar</a>-->
     <section class="py-5">
+
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
+
                 <?php
                 include("./admin/conexion.php");
                 $sql = "select * from producto inner join inventario on inventario.idproducto = producto.idproducto where md5(producto.idproducto) = '" . $_REQUEST["idprod"] . "'";
-                //echo $sql;
+
                 $result = mysqli_query($conn, $sql);
+                $mininventario = 1;
                 $idproducto = 0;
                 $nombreproducto = "";
                 $precioproducto = 0;
@@ -45,7 +52,9 @@
                 } else {
                     echo "0 results";
                 }
-
+                if ($inventario < 1) {
+                    $mininventario = 0;
+                }
                 mysqli_close($conn);
                 ?>
                 <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="<?= $urlfoto ?>" alt="..." /></div>
@@ -57,10 +66,20 @@
                         <span>$<?= $precioproducto ?></span>
                     </div>
                     <p class="lead"><?= $descripcionproducto ?></p>
-                    <form action="" method="post" cause>
+                    <form action="agregacarrito.php" method="get" cause>
+                        <input type="text" style="visibility:hidden;" value="<?= $_REQUEST["idprod"] ?>" name="idprod" value="idprod">
                         <div class="d-flex">
-                            <input required class="form-control text-center me-3" id="inputQuantity" type="number" value="0" min="1" max="<?= $inventario ?>" style="max-width: 5rem" />
-                            <input type="submit" value="Comprar" class="btn btn-outline-dark flex-shrink-0">
+                            <?php
+                            if ($mininventario < 1) {
+                                echo '<div class="alert alert-warning" role="alert">
+                                Lo sentimos, no tenemos en existencias
+                              </div>';
+                            } else {
+                                echo '<br><input required class="form-control text-center me-3" id="cant" name="cant" type="number" value="0" min="' . $mininventario . '" max="' . $inventario . '" style="max-width: 5rem" />
+                                <input type="submit" value="Agregar al carrito" class="btn btn-outline-dark flex-shrink-0">';
+                            }
+                            ?>
+
 
                         </div>
                     </form>
@@ -80,9 +99,9 @@
                 $result = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($result) > 0) {
-                    //var_dump($result);
+
                     while ($row = mysqli_fetch_assoc($result)) {
-                        //var_dump($row);
+
                         echo '<div class="col mb-5">
                         <div class="card h-100">
                             <img class="card-img-top" src="' . $row["urlfoto"] . '" alt="..." />

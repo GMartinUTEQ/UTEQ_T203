@@ -27,7 +27,9 @@ session_start();
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <h1>Carrito de compras</h1>
                 <?php
+
                 $carrito = $_SESSION["sCarrito"];
+
                 $cuentaCarrito = count($carrito);
                 if ($cuentaCarrito > 0) {
                     echo ' <table class="table table-hover">
