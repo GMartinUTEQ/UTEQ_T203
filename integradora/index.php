@@ -39,7 +39,7 @@ session_start();
                 if (isset($_REQUEST["idcat"])) {
                     $whereidcat = " and md5(idcategoria) ='" . $_REQUEST["idcat"] . "'";
                 }
-                $sql = "select * from producto where activo = 1 " . $whereidcat;
+                $sql = "select * from producto as p inner join inventario as i on i.idproducto = p.idproducto where p.activo = 1 " . $whereidcat;
 
                 $result = $conn->query($sql);
 
@@ -59,8 +59,8 @@ session_start();
                                         <div class="bi-star-fill"></div>
                                         <div class="bi-star-fill"></div>
                                     </div>
-                                    <span class="text-muted text-decoration-line-through">$20.00</span>
-                                    $18.00
+                                    <span class="text-muted text-decoration-line-through">$' . $row["precio"] * 1.17 . '</span>
+                                    $' . $row["precio"] . '
                                 </div>
                             </div>
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">

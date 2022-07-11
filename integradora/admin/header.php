@@ -1,7 +1,6 @@
 <?php
-session_start();
+//session_start();
 
-$carrito = $_SESSION["sCarrito"];
 ?>
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">

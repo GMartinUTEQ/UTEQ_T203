@@ -18,6 +18,7 @@ if ($result->num_rows > 0) {
         if (md5($pass) == $row["pass"]) {
 
             if ($row["tipousuario"] > 0) {
+                $_SESSION["sIdusuario"] = md5($row["idusuario"]);
                 $_SESSION["nomcliente"] = $row["usuario"];
                 $carrito = array();
                 $_SESSION["sCarrito"] = $carrito;

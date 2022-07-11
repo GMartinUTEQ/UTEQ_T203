@@ -143,6 +143,7 @@ session_start();
                         </div-->
                         <div class="form-group">
                           <label for="urlfoto">Foto:</label>
+                          <input readonly type="text" class="form-control" value="foto.png" />
                           <input type="file" class="form-control" name="fileToUpload" id="fileToUpload" value="" placeholder="URL de Foto.">
                         </div>
 

@@ -19,6 +19,7 @@ include_once("ValidaSesion.php");
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+
 </head>
 <!--
 `body` tag options:
@@ -31,6 +32,7 @@ include_once("ValidaSesion.php");
 -->
 
 <body class="hold-transition sidebar-mini">
+
   <div class="wrapper">
     <!-- GMV:  Aqui va el encabezado -->
     <?php
@@ -331,7 +333,79 @@ include_once("ValidaSesion.php");
   <!-- ./wrapper -->
 
   <!-- REQUIRED SCRIPTS -->
+  <?php
 
+  echo "<script>
+      $(function () {
+        var $" . "visitorsChart = $('#visitors-chart')
+        // eslint-disable-next-line no-unused-vars
+        var visitorsChart = new Chart($" . "visitorsChart, {
+          data: {
+            labels: ['18th', '20th', '22nd', '24th', '26th', '28th', '30th'],
+            datasets: [{
+              type: 'line',
+              data: [100, 120, 170, 167, 180, 177, 160],
+              backgroundColor: 'transparent',
+              borderColor: '#007bff',
+              pointBorderColor: '#007bff',
+              pointBackgroundColor: '#007bff',
+              fill: false
+              // pointHoverBackgroundColor: '#007bff',
+              // pointHoverBorderColor    : '#007bff'
+            },
+            {
+              type: 'line',
+              data: [60, 80, 70, 67, 80, 77, 100],
+              backgroundColor: 'tansparent',
+              borderColor: '#ced4da',
+              pointBorderColor: '#ced4da',
+              pointBackgroundColor: '#ced4da',
+              fill: false
+              // pointHoverBackgroundColor: '#ced4da',
+              // pointHoverBorderColor    : '#ced4da'
+            }]
+          },
+          options: {
+            maintainAspectRatio: false,
+            tooltips: {
+              mode: mode,
+              intersect: intersect
+            },
+            hover: {
+              mode: mode,
+              intersect: intersect
+            },
+            legend: {
+              display: false
+            },
+            scales: {
+              yAxes: [{
+                // display: false,
+                gridLines: {
+                  display: true,
+                  lineWidth: '4px',
+                  color: 'rgba(0, 0, 0, .2)',
+                  zeroLineColor: 'transparent'
+                },
+                ticks: $.extend({
+                  beginAtZero: true,
+                  suggestedMax: 200
+                }, ticksStyle)
+              }],
+              xAxes: [{
+                display: true,
+                gridLines: {
+                  display: false
+                },
+                ticks: ticksStyle
+              }]
+            }
+          }
+        })
+      })
+        </script>
+";
+  ?>
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap -->

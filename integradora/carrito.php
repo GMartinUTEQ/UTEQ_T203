@@ -38,6 +38,8 @@ session_start();
                             <th>idProducto</th>
                             <th>NombreProducto</th>
                             <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Importe</th>
                             <th>Eliminar</th>
                           </tr>
                         </thead>
@@ -46,7 +48,7 @@ session_start();
 
 
                         include("./admin/conexion.php");
-                        $sql = "select * from producto where activo = 1 and idproducto = " . $x;
+                        $sql = "select * from producto as p inner join inventario as i on p.idproducto = i.idproducto where p.activo = 1 and p.idproducto = " . $x;
 
                         $result = $conn->query($sql);
 
@@ -57,7 +59,9 @@ session_start();
                                 echo '<tr>
                                     <td>' . $row["idproducto"] . '</td>
                                     <td>' . $row["nombreproducto"] . '</td>
-                                    <td><input type="number" value="' . $x_value . '"></td>
+                                    <td>' . $x_value . '</td>
+                                    <td>$' . number_format(($row["precio"]), 2, '.', ',') . ' </td>
+                                    <td>$' . number_format(($row["precio"] * $x_value), 2, '.', ',')  . '</td>
                                     <td><a href="eliminacarrito.php?idp=' . $row["idproducto"] . '" class="btn btn-danger">Eliminar</a></td>
                                   </tr>
                                   ';
@@ -65,7 +69,8 @@ session_start();
                         }
                     }
                     echo '</tbody>
-                    </table>';
+                    </table>
+                    <a class="btn btn-primary" href="checkout">Checkout</a>';
                 } else {
                     echo "<br><br><h3>Aún no tienes nada en tu carrito, mira las siguientes recomendaciones.</h3>";
                 }
