@@ -121,7 +121,7 @@ include_once("ValidaSesion.php");
                             <td>" . $row["activo"] . "</td>
                             <td>" . $row["prefijo"] . "</td>
                             <td><a href='categoria.php?idcat=" . md5($row["idcategoria"]) . "'><i class=\"far fa-edit\"></i></a></td>
-                            <td><a href='categoriaAcciones.php?acc=elimina&idcat=" .  md5($row["idcategoria"])  . "'><i class=\"fa fa-trash-alt\"></i></a></td>
+                            <td><a onclick='return confirm(\"Estás segur@?\")' href='categoriaAcciones.php?acc=elimina&idcat=" .  md5($row["idcategoria"])  . "'><i class=\"fa fa-trash-alt\"></i></a></td>
                          
                            </tr>
                             ";

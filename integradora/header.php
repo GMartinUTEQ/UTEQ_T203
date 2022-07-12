@@ -38,7 +38,7 @@
                     <span class="badge bg-dark text-white ms-1 rounded-pill">' . $cuentaCarrito . '</span>
                 </a>';
                 } else {
-                    echo '<a href="./admin" class="btn btn-outline-dark" type="submit">
+                    echo '<a href="./admin/index.php?usr=0" class="btn btn-outline-dark" type="submit">
                     <i class="bi-cart-fill me-1"></i>
                     Iniciar Sesión
                     </span>

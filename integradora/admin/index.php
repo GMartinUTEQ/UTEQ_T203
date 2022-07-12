@@ -49,6 +49,22 @@ session_destroy();
               </div>
             </div>
           </div>
+          <?php
+
+          if (isset($_REQUEST["usr"])) {
+            echo '<div class="input-group mb-3">
+            <select class="form-control">
+              <option value="3">Querétaro</option>
+            </select>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>';
+          }
+
+          ?>
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">

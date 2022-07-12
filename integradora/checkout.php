@@ -85,7 +85,7 @@ session_start();
                         <!-- Details of item that customers will purchase -->
                         <input type='hidden' name='item_number' value='0'>
                         <input type='hidden' name='item_name' value='PizzaTime'>
-                        <input type='hidden' name='amount' value='<?= $TotalCompra ?>'>
+                        <input type='hidden' name='amount' value='<?= ($TotalCompra * 1.16) ?>'>
                         <input type='hidden' name='currency_code' value='MXN'>
                         <input type='hidden' name='no_shipping' value='1'>
 
